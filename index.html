@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TT 2027 Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: asphalt ground, yellow race-plate digits as the hero, Mountain Course waypoints as a road strip below */
+:root {
+  --asphalt: #17191c;
+  --asphalt-2: #22252a;
+  --line: #3a3e45;
+  --plate: #f5c518;
+  --plate-ink: #111214;
+  --chalk: #eceae4;
+  --muted: #9a9ea6;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0;
+  background: var(--asphalt);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,.035) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.03) 0 1px, transparent 1px);
+  background-size: 7px 7px, 11px 11px;
+  color: var(--chalk);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-inline: 20px;
+  padding-block: 32px 40px;
+  display: grid;
+  gap: 36px;
+}
+.checker {
+  height: 18px;
+  background:
+    conic-gradient(var(--chalk) 25%, var(--asphalt) 0 50%, var(--chalk) 0 75%, var(--asphalt) 0) 0 0 / 18px 18px;
+  opacity: .9;
+}
+header { display: grid; gap: 10px; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--plate);
+}
+h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(44px, 9vw, 104px);
+  line-height: .9;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.sub { margin: 0; color: var(--muted); font-size: 18px; max-width: 60ch; }
+
+.plates {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 20px);
+}
+.plate {
+  background: var(--plate);
+  color: var(--plate-ink);
+  border-radius: 14px;
+  border: 3px solid var(--plate-ink);
+  outline: 3px solid var(--plate);
+  outline-offset: 0;
+  padding: clamp(10px, 2.4vw, 22px) 6px clamp(8px, 1.6vw, 14px);
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.num {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(46px, 11vw, 132px);
+  line-height: .9;
+  font-variant-numeric: tabular-nums;
+}
+.unit {
+  font-family: var(--mono);
+  font-size: clamp(10px, 1.6vw, 13px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.finish {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+.finish p {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(52px, 12vw, 150px);
+  line-height: .88;
+  text-transform: uppercase;
+  color: var(--plate);
+  text-wrap: balance;
+}
+.finish .checker { width: min(100%, 420px); }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+.meta b { color: var(--chalk); font-weight: 500; }
+
+.course { display: grid; gap: 14px; }
+.course h2 {
+  margin: 0;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.road {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding-top: 26px;
+}
+.road::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 10px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--chalk) 0 14px, transparent 14px 26px);
+  opacity: .5;
+}
+.stop { position: relative; min-width: 0; padding-right: 6px; }
+.stop::before {
+  content: "";
+  position: absolute;
+  top: -22px; left: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--asphalt);
+  border: 3px solid var(--plate);
+}
+.stop span { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; }
+.stop small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .road { grid-template-columns: 1fr; padding-top: 0; padding-left: 26px; gap: 14px; }
+  .road::before {
+    left: 6px; right: auto; top: 0; bottom: 0; width: 4px; height: auto;
+    background: repeating-linear-gradient(180deg, var(--chalk) 0 14px, transparent 14px 26px);
+  }
+  .stop::before { top: 4px; left: -26px; }
+}
+@media (max-width: 420px) {
+  .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .num.tick { animation: tick .35s ease-out; }
+  @keyframes tick { from { transform: translateY(-6%); opacity: .55; } to { transform: none; opacity: 1; } }
+}
+</style>
+</head>
+<body>
+
+<div class="checker" aria-hidden="true"></div>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Isle of Man · Snaefell Mountain Course</div>
+    <h1>Tourist Trophy 2027</h1>
+    <p class="sub">Countdown to the first race day of the TT: Saturday 5 June 2027.</p>
+  </header>
+
+  <section id="countdown" aria-live="polite">
+    <div class="plates">
+      <div class="plate"><div class="num" id="d">—</div><div class="unit">Days</div></div>
+      <div class="plate"><div class="num" id="h">—</div><div class="unit">Hours</div></div>
+      <div class="plate"><div class="num" id="m">—</div><div class="unit">Minutes</div></div>
+      <div class="plate"><div class="num" id="s">—</div><div class="unit">Seconds</div></div>
+    </div>
+  </section>
+
+  <section class="finish" id="finish" hidden>
+    <p>Here we go, see you there</p>
+    <div class="checker" aria-hidden="true"></div>
+  </section>
+
+  <div class="meta">
+    <div>Qualifying <b>31 May – 4 Jun</b></div>
+    <div>Race week <b>5 – 12 Jun 2027</b></div>
+    <div>Lap <b>37.73 mi · 60.7 km</b></div>
+  </div>
+
+  <section class="course">
+    <h2>One lap of the Mountain Course</h2>
+    <div class="road">
+      <div class="stop"><span>Grandstand</span><small>Douglas · start</small></div>
+      <div class="stop"><span>Bray Hill</span><small>downhill flat out</small></div>
+      <div class="stop"><span>Ballacraine</span><small>right-hander</small></div>
+      <div class="stop"><span>Ballaugh Bridge</span><small>airborne</small></div>
+      <div class="stop"><span>Ramsey Hairpin</span><small>start of the climb</small></div>
+      <div class="stop"><span>The Bungalow</span><small>on the mountain</small></div>
+      <div class="stop"><span>Creg-ny-Baa</span><small>down to the finish</small></div>
+    </div>
+  </section>
+
+  <footer>Count runs to 00:00 Isle of Man time (BST) on 5 June 2027. Fan-made countdown, not an official TT page.</footer>
+</main>
+
+<script>
+(function () {
+  // 5 June 2027 00:00 Isle of Man (BST, UTC+1)
+  var TARGET = Date.UTC(2027, 5, 4, 23, 0, 0);
+  var preview = location.hash === "#finish";
+  var els = { d: document.getElementById("d"), h: document.getElementById("h"), m: document.getElementById("m"), s: document.getElementById("s") };
+  var cd = document.getElementById("countdown"), fin = document.getElementById("finish");
+  var last = {};
+  function pad(n) { return n < 10 ? "0" + n : String(n); }
+  function set(k, v) {
+    if (last[k] === v) return;
+    last[k] = v;
+    var el = els[k];
+    el.textContent = v;
+    el.classList.remove("tick"); void el.offsetWidth; el.classList.add("tick");
+  }
+  function render() {
+    var diff = TARGET - Date.now();
+    if (preview || diff <= 0) {
+      cd.hidden = true; fin.hidden = false;
+      document.title = "Here we go · TT 2027";
+      return false;
+    }
+    var t = Math.floor(diff / 1000);
+    set("d", String(Math.floor(t / 86400)));
+    set("h", pad(Math.floor(t % 86400 / 3600)));
+    set("m", pad(Math.floor(t % 3600 / 60)));
+    set("s", pad(t % 60));
+    return true;
+  }
+  if (render()) {
+    var timer = setInterval(function () { if (!render()) clearInterval(timer); }, 1000);
+  }
+})();
+</script>
+</body>
+</html>
