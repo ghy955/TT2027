@@ -17,12 +17,14 @@
   --plate-ink: #111214;
   --chalk: #eceae4;
   --muted: #9a9ea6;
+  --red: #d63a2e;
   --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --body: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { min-height: 100%; }
 body {
   margin: 0;
@@ -166,6 +168,68 @@ h1 {
 .stop span { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; }
 .stop small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
 
+.team {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--asphalt-2);
+  padding: clamp(20px, 4vw, 36px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 44px);
+  align-items: center;
+}
+.team img { width: 100%; max-width: 440px; height: auto; display: block; }
+.team-copy { display: grid; gap: 14px; min-width: 0; }
+.team-copy .eyebrow { color: var(--red); }
+.team-copy h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: .95;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.team-copy p { margin: 0; color: var(--muted); max-width: 46ch; }
+.riders { display: flex; flex-wrap: wrap; gap: 12px; }
+.rider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid var(--chalk);
+  border-radius: 10px;
+  padding: 6px 14px 6px 6px;
+}
+.rider .tag {
+  background: var(--red);
+  color: var(--chalk);
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1;
+  border-radius: 6px;
+  padding: 6px 9px;
+}
+.rider span {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.finish .sign {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+.finish .sign b { color: var(--red); font-weight: 500; }
+@media (max-width: 640px) {
+  .team { grid-template-columns: 1fr; }
+}
+
 footer {
   border-top: 1px solid var(--line);
   padding-top: 16px;
@@ -211,6 +275,7 @@ footer {
 
   <section class="finish" id="finish" hidden>
     <p>Here we go, see you there</p>
+    <div class="sign">Gary &amp; Zack · <b>Team Motobirrino</b></div>
     <div class="checker" aria-hidden="true"></div>
   </section>
 
@@ -219,6 +284,19 @@ footer {
     <div>Race week <b>5 – 12 Jun 2027</b></div>
     <div>Lap <b>37.73 mi · 60.7 km</b></div>
   </div>
+
+  <section class="team" aria-labelledby="team-title">
+    <img src="motobirrino-logo.webp" alt="Motobirrino logo, since 2004" width="520" height="265">
+    <div class="team-copy">
+      <div class="eyebrow">On the Island for TT 2027</div>
+      <h2 id="team-title">Representing Team Motobirrino</h2>
+      <div class="riders">
+        <div class="rider"><div class="tag">G</div><span>Gary</span></div>
+        <div class="rider"><div class="tag">Z</div><span>Zack</span></div>
+      </div>
+      <p>From Bologna to the Mountain Course. Two riders, one team, and a few pints along the way.</p>
+    </div>
+  </section>
 
   <section class="course">
     <h2>One lap of the Mountain Course</h2>
